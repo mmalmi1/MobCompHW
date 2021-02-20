@@ -7,13 +7,19 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.mobcomphw.databinding.MessageLayoutBinding
-import com.example.mobcomphw.db.AppDatabase
-import com.example.mobcomphw.db.PaymentInfo
+import com.example.mobcomphw.db.ReminderInfo
+import com.example.mobcomphw.db.ReminderDatabase
+import kotlinx.android.synthetic.main.list_item.view.*
 
 
 class MessageActivity : AppCompatActivity() {
@@ -72,7 +78,7 @@ class MessageActivity : AppCompatActivity() {
         refreshListView()
     }
 
-    private fun refreshListView() {
+    fun refreshListView() {
         var refreshTask = LoadPaymentInfoEntries()
         refreshTask.execute()
     }
@@ -115,26 +121,29 @@ class MessageActivity : AppCompatActivity() {
         v.alpha = 0f
     }
 
-    inner class LoadPaymentInfoEntries : AsyncTask<String?, String?, List<PaymentInfo>>() {
-        override fun doInBackground(vararg params: String?): List<PaymentInfo> {
+    inner class LoadPaymentInfoEntries : AsyncTask<String?, String?, List<ReminderInfo>>() {
+        override fun doInBackground(vararg params: String?): List<ReminderInfo> {
             val db = Room
                 .databaseBuilder(
                     applicationContext,
-                    AppDatabase::class.java,
+                    ReminderDatabase::class.java,
                     "com.example.mobcomphw"
                 )
-                .fallbackToDestructiveMigration().build()
+                //.fallbackToDestructiveMigration()
+                .addMigrations(MIGRATION_2_3)
+                .addMigrations(MIGRATION_4_3)
+                .build()
             //db.paymentDao().deleteAll()
             //val payment1 = PaymentInfo(uid = null, name = "01.02.2021 14:30", accountNumber = "Remeber to wash the dishes")
             //val payment2 = PaymentInfo(uid = null, name = "02.02.2021 05:59", accountNumber = "Do laundry")
             //db.paymentDao().insert(payment1)
             //db.paymentDao().insert(payment2)
-            val paymentInfos = db.paymentDao().getPaymentInfos()
-            Log.d("Lab", paymentInfos.toString())
+            val reminderInfos = db.reminderDao().getReminderInfos()
+            //Log.d("Lab", reminderInfos.toString())
             db.close()
-            return paymentInfos
+            return reminderInfos
         }
-        override fun onPostExecute(paymentInfos: List<PaymentInfo>?) {
+        override fun onPostExecute(paymentInfos: List<ReminderInfo>?) {
             super.onPostExecute(paymentInfos)
             if (paymentInfos != null) {
                 if (paymentInfos.isNotEmpty()) {
@@ -144,6 +153,15 @@ class MessageActivity : AppCompatActivity() {
                     listView.adapter = null
                     Toast.makeText(applicationContext, "No items to show", Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+        private val MIGRATION_2_3  = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+            }
+        }
+        private val MIGRATION_4_3  = object : Migration(4, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
             }
         }
     }

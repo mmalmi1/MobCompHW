@@ -10,7 +10,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.room.Room
-import com.example.mobcomphw.db.PaymentInfo
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.mobcomphw.db.ReminderInfo
 import com.example.mobcomphw.db.UserDatabase
 import com.example.mobcomphw.db.UserInfo
 
@@ -37,8 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        var textFieldUsername = findViewById(R.id.editUsername) as EditText
-        var textFieldPassword = findViewById(R.id.editPassword) as EditText
     }
 
     //android.os.AsyncTask<Params, Progress, Result>
@@ -50,7 +50,9 @@ class MainActivity : AppCompatActivity() {
                     UserDatabase::class.java,
                     "com.example.mobcomphw"
                 )
-                .fallbackToDestructiveMigration().build()
+                .addMigrations(MIGRATION_3_4)
+                .addMigrations(MIGRATION_4_3)
+                .build()
             db.close()
             val dBpassword = db.userDao().getUser(params[0].toString())
             //Log.d("Lab", params[1].toString())
@@ -69,15 +71,20 @@ class MainActivity : AppCompatActivity() {
         override fun onPostExecute(authenticated: Boolean) {
             super.onPostExecute(authenticated)
             if(authenticated) {
-
                 startActivity(
                     Intent(applicationContext, MessageActivity::class.java)
                 )
             }else {
                 Toast.makeText(applicationContext, "Login failed", Toast.LENGTH_SHORT).show()
             }
-
-
+        }
+        private val MIGRATION_3_4  = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        private val MIGRATION_4_3  = object : Migration(4, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
         }
     }
 

@@ -16,9 +16,18 @@
             android:layout_height="wrap_content"
             android:text="2.2.2021 14:30"
             android:gravity="left"
+            android:layout_marginRight="70dp"
             android:textColor="#000000"
             android:textSize="22dp"
             />
+
+
+        <ImageView
+            android:id="@+id/reminderImageType"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:src="@drawable/ic_social" />
 
         <TextView
             android:id="@+id/reminderMessage"
@@ -30,6 +39,26 @@
             android:text="Remeber to wash the dishes"
             android:textColor="#000000"
             android:textSize="18dp" />
+
+        <ImageButton
+            android:id="@+id/deleteButton"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reminderMessage"
+            android:layout_marginTop="40dp"
+            android:background="#E8E875"
+            android:layout_marginLeft="300dp"
+            android:src="@drawable/ic_delete"/>
+
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reminderMessage"
+            android:layout_marginTop="40dp"
+            android:background="#E8E875"
+            android:layout_marginLeft="230dp"
+            android:src="@drawable/ic_edit"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
