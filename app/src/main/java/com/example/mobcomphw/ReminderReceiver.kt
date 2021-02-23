@@ -26,7 +26,7 @@ class ReminderReceiver : BroadcastReceiver() {
                 text = intent.getStringExtra("message")!!
             }
 
-            val firebase = Firebase.database
+            /*val firebase = Firebase.database
             val reference = firebase.getReference("reminders")
             val reminderListener = object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -47,7 +47,7 @@ class ReminderReceiver : BroadcastReceiver() {
 
             }
             val child = reference.child(key)
-            child.addValueEventListener(reminderListener)
+            child.addValueEventListener(reminderListener)*/
 
         }
     }

@@ -132,14 +132,10 @@ class MessageActivity : AppCompatActivity() {
                 //.fallbackToDestructiveMigration()
                 .addMigrations(MIGRATION_2_3)
                 .addMigrations(MIGRATION_4_3)
+                .addMigrations(MIGRATION_3_5)
+                .addMigrations(MIGRATION_4_5)
                 .build()
-            //db.paymentDao().deleteAll()
-            //val payment1 = PaymentInfo(uid = null, name = "01.02.2021 14:30", accountNumber = "Remeber to wash the dishes")
-            //val payment2 = PaymentInfo(uid = null, name = "02.02.2021 05:59", accountNumber = "Do laundry")
-            //db.paymentDao().insert(payment1)
-            //db.paymentDao().insert(payment2)
             val reminderInfos = db.reminderDao().getReminderInfos()
-            //Log.d("Lab", reminderInfos.toString())
             db.close()
             return reminderInfos
         }
@@ -161,6 +157,14 @@ class MessageActivity : AppCompatActivity() {
             }
         }
         private val MIGRATION_4_3  = object : Migration(4, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        private val MIGRATION_4_5  = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        private val MIGRATION_3_5  = object : Migration(3, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
             }
         }

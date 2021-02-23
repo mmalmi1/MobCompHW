@@ -52,10 +52,10 @@ class MainActivity : AppCompatActivity() {
                 )
                 .addMigrations(MIGRATION_3_4)
                 .addMigrations(MIGRATION_4_3)
+                .addMigrations(MIGRATION_5_4)
                 .build()
             db.close()
             val dBpassword = db.userDao().getUser(params[0].toString())
-            //Log.d("Lab", params[1].toString())
 
             db.close()
             return if(params[1].toString() == dBpassword) {
@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         private val MIGRATION_4_3  = object : Migration(4, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        private val MIGRATION_5_4  = object : Migration(5, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
             }
         }

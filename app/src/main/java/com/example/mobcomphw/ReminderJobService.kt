@@ -2,12 +2,21 @@ package com.example.mobcomphw
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.app.job.JobParameters
+import android.app.job.JobScheduler
 import android.app.job.JobService
 import android.content.Context
+import android.content.Intent
+import android.os.AsyncTask
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Room
+import com.example.mobcomphw.db.ReminderDatabase
 import kotlin.random.Random
 
 
@@ -27,12 +36,13 @@ class ReminderJobService : JobService() {
                     return@Thread
                 }
                 var message = params?.extras?.getString("message")
-                if (message != null) {
-                    showNotification(applicationContext, message)
+                var uid = params?.extras?.getInt("uid")
+                if (message != null && uid != null) {
+                    showNotification(applicationContext, message, uid)
                 }else {
-                    showNotification(applicationContext, "asd")
+                    //pass
                 }
-                jobFinished(params, true)
+                jobFinished(params, false)
             }
         }.start()
     }
@@ -44,7 +54,7 @@ class ReminderJobService : JobService() {
     }
 
     companion object {
-        fun showNotification(context: Context?, message: String) {
+        fun showNotification(context: Context?, message: String, uid : Int) {
             Log.d("Lab", "Notification call")
             val CHANNEL_ID = "REMINDER_NOTIFICATION_CHANNEL"
             var notificationId = 1589
@@ -53,7 +63,7 @@ class ReminderJobService : JobService() {
             val notificationBuilder =
                 NotificationCompat.Builder(context!!.applicationContext, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_fab_menu)
-                    .setContentTitle(context.getString(R.string.app_name))
+                    .setContentTitle("NoteZ")
                     .setContentText(message)
                     .setStyle(
                         NotificationCompat.BigTextStyle()
@@ -75,7 +85,17 @@ class ReminderJobService : JobService() {
                 notificationManager.createNotificationChannel(channel)
             }
             notificationManager.notify(notificationId, notificationBuilder.build())
+            AsyncTask.execute {
+                //save reminder to room database
+                val db = Room.databaseBuilder(
+                    context,
+                    ReminderDatabase::class.java,
+                    "com.example.mobcomphw"
+                ).build()
+                db.reminderDao().updateToSeen(uid)
+                Log.d("Lab", "Notification $uid set to seen")
+                db.close()
+            }
         }
-
     }
 }
