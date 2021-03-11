@@ -2,6 +2,7 @@ package com.example.mobcomphw
 
 import android.content.Context
 import android.os.AsyncTask
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +14,15 @@ import androidx.room.Room
 import com.example.mobcomphw.databinding.ListItemBinding
 import com.example.mobcomphw.db.ReminderDatabase
 import com.example.mobcomphw.db.ReminderInfo
-import kotlinx.android.synthetic.main.list_item.view.*
+import java.util.*
+import kotlin.random.Random
 
 
 class MyAdapter(context: Context, private  val list:List<ReminderInfo>) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private var mTTS: TextToSpeech? = null
 
     override fun getView(position: Int, convertView: View?, container: ViewGroup): View? {
         var rowBinding = ListItemBinding.inflate(inflater, container, false)
@@ -38,6 +41,21 @@ class MyAdapter(context: Context, private  val list:List<ReminderInfo>) : BaseAd
             "Social" ->  rowBinding.reminderImageType.setImageResource(R.drawable.ic_social)
 
         }
+        mTTS = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                // Init
+                rowBinding.textToSpeechButton.isEnabled = true
+            } else {
+                rowBinding.textToSpeechButton.isEnabled = false
+                Log.d("Lab", "Text to speech init failed")
+            }
+        })
+        // Make the microphone button speak
+        rowBinding.textToSpeechButton.setOnClickListener() {
+            var textId : Int = 500
+            mTTS!!.speak(rowBinding.reminderMessage.text.toString(), TextToSpeech.QUEUE_FLUSH, null, Random(textId).nextInt(1, 30).toString())
+        }
+
         rowBinding.deleteButton.setOnClickListener() {
             Log.d("Lab", "Delete " +  rowBinding.reminderMessage.text + ' ' + list[position].uid)
             val selectedPayment = list[position]
@@ -113,6 +131,7 @@ class MyAdapter(context: Context, private  val list:List<ReminderInfo>) : BaseAd
         }
         return rowBinding.root
     }
+
     override fun getItem(position: Int): Any {
         return list[position]
     }

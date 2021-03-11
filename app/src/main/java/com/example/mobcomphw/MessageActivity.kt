@@ -5,21 +5,20 @@ import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.mobcomphw.databinding.MessageLayoutBinding
-import com.example.mobcomphw.db.ReminderInfo
 import com.example.mobcomphw.db.ReminderDatabase
-import kotlinx.android.synthetic.main.list_item.view.*
+import com.example.mobcomphw.db.ReminderInfo
+import java.util.*
 
 
 class MessageActivity : AppCompatActivity() {
@@ -39,17 +38,20 @@ class MessageActivity : AppCompatActivity() {
         val fab2: View = findViewById(R.id.fab_logout)
         val fab3: View = findViewById(R.id.fab_add_reminder)
         val fab4: View = findViewById(R.id.fab_profile)
+        val fab5: View = findViewById(R.id.fab_setLocation)
 
         fab.setOnClickListener { view ->
             if(toggleFab) {
                 showIn(fab2)
                 showIn(fab3)
                 showIn(fab4)
+                showIn(fab5)
                 toggleFab = false
             }else {
                 showOut(fab2)
                 showOut(fab3)
                 showOut(fab4)
+                showOut(fab5)
                 toggleFab = true
             }
         }
@@ -69,6 +71,12 @@ class MessageActivity : AppCompatActivity() {
                 Intent(applicationContext, profileActivity::class.java)
             )
         }
+        fab5.setOnClickListener { view ->
+            startActivity(
+                Intent(applicationContext, SetLocationActivity::class.java)
+            )
+        }
+
         //update userInterface
         refreshListView()
     }

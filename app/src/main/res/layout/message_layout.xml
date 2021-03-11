@@ -18,13 +18,21 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_setLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_gps"
+            android:background="@color/colorPrimary"
+            android:visibility="gone"
+            android:layout_margin="5dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_logout"
             android:background="@color/colorPrimary"
             android:visibility="gone"
-            android:layout_margin="10dp" />
+            android:layout_margin="5dp" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_profile"
             android:layout_width="wrap_content"
@@ -32,7 +40,7 @@
             android:src="@drawable/ic_profile"
             android:background="@color/colorPrimary"
             android:visibility="gone"
-            android:layout_margin="10dp" />
+            android:layout_margin="5dp" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_reminder"
             android:layout_width="wrap_content"
@@ -40,14 +48,14 @@
             android:src="@drawable/ic_add_reminder"
             android:background="@color/colorPrimary"
             android:visibility="gone"
-            android:layout_margin="10dp" />
+            android:layout_margin="5dp" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_fab_menu"
             android:background="@color/colorPrimary"
-            android:layout_margin="10dp" />
+            android:layout_margin="5dp" />
     </LinearLayout>
 
     <ListView

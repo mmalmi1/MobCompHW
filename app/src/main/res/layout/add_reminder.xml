@@ -12,18 +12,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif"
         android:text="Add a new reminder:"
         android:textColor="#000000"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="normal" />
 
     <Spinner
         android:id="@+id/reminder_type_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="25dp"
+        android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="75dp"
         android:textSize="36sp"
         android:outlineProvider="paddedBounds" />
@@ -39,10 +39,32 @@
         android:textAlignment="center" />
 
     <TextView
+        android:id="@+id/locationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Reminder location: "
+        android:textColor="#707070"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/addLocation"
         android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:text="Add a location" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif"
         android:text="Reminder time (leave empty for no notification)"
         android:textColor="#707070"
@@ -75,7 +97,7 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

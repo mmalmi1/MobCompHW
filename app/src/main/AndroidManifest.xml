@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mobcomphw">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -19,6 +21,8 @@
         <activity android:name=".RegistrationActivity"/>
         <activity android:name=".profileActivity"/>
         <activity android:name=".AddNewReminderActivity"/>
+        <activity android:name=".MapsActivity"/>
+        <activity android:name=".SetLocationActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +31,8 @@
             </intent-filter>
         </activity>
         <receiver android:name=".ReminderReceiver" />
-        ​<service
+        <receiver android:name=".GeofenceReceiver" />
+        <service
             android:name=".ReminderJobService"
             android:label="Word service"
             android:permission="android.permission.BIND_JOB_SERVICE">

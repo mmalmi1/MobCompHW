@@ -59,6 +59,15 @@
             android:background="#E8E875"
             android:layout_marginLeft="230dp"
             android:src="@drawable/ic_edit"/>
+        <ImageButton
+            android:id="@+id/textToSpeechButton"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reminderMessage"
+            android:layout_marginTop="40dp"
+            android:background="#E8E875"
+            android:layout_marginLeft="0dp"
+            android:src="@drawable/ic_audio"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
